@@ -99,33 +99,5 @@ namespace RemoteController
         {
             this.helpService.LogToDebugControl("ServiceWorkerRunWorkerCompleted");
         }
-
-        /*private void startRemoteServer(object sender, EventArgs e)
-        {
-            int screenW = Screen.PrimaryScreen.Bounds.Width;
-            int screenH = Screen.PrimaryScreen.Bounds.Height;
-
-            int mouseX = Cursor.Position.X;
-            int mouseY = Cursor.Position.Y;
-
-            this.helpService.LogToDebugControl("Screen w: " + screenW.ToString() + " Screen h: " + screenH.ToString());
-            this.helpService.LogToDebugControl("Mouse x: " + mouseX.ToString() + " Mouse Y: " + mouseY.ToString());
-            
-            var server = new WebSocketServer("ws://0.0.0.0:8181");
-            server.Start(socket =>
-            {
-                socket.OnOpen = () => this.helpService.LogToDebugControl("Open!");
-                socket.OnClose = () => this.helpService.LogToDebugControl("Close!");
-                socket.OnMessage = (message) => {
-                    socket.Send(message);
-                    this.helpService.LogToDebugControl(message);
-                };
-            });
-        }
-
-        private void stopRemoteServer(object sender, EventArgs e)
-        {
-
-        }*/
     }
 }

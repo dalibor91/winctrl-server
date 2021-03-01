@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace RemoteController.Services.Parser
 {
 
-    interface CommandExecutor<ResultOfExecution, InputForExecution>
+    interface CommandExecutor<InputForExecution>
     {
-        ResultOfExecution Execute();
+        MouseInfoResult Execute();
 
         void SetData(InputForExecution data);
     }
@@ -26,6 +22,8 @@ namespace RemoteController.Services.Parser
         {
 
             ExecutedCommand cmd = new ExecutedCommand();
+            WindowsInput.InputSimulator simulator = new WindowsInput.InputSimulator();
+
             cmd.Success = true;
 
             switch (Command)
@@ -34,17 +32,17 @@ namespace RemoteController.Services.Parser
                     cmd.Result = new MouseInfoCommand().Execute();
                     break;
                 case "mouse_click":
-                    MouseClickCommand _cmdClick = new MouseClickCommand();
+                    MouseClickCommand _cmdClick = new MouseClickCommand(simulator);
                     _cmdClick.SetData(ConvertObject<MouseClickInput>(Data));
                     cmd.Result = _cmdClick.Execute();
                     break;
                 case "mouse_move":
-                    MouseMoveCommand _cmdMove = new MouseMoveCommand();
+                    MouseMoveCommand _cmdMove = new MouseMoveCommand(simulator);
                     _cmdMove.SetData(ConvertObject<MouseMoveInput>(Data));
                     cmd.Result = _cmdMove.Execute();
                     break;
                 case "keyboard_input":
-                    KeyboardInputCommand _keyboardCommand = new KeyboardInputCommand();
+                    KeyboardInputCommand _keyboardCommand = new KeyboardInputCommand(simulator);
                     _keyboardCommand.SetData(ConvertObject<KeyboardInputInput>(Data));
                     cmd.Result = _keyboardCommand.Execute();
                     break;

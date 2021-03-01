@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using System.Drawing;
 using Newtonsoft.Json;
-
+using WindowsInput;
 
 namespace RemoteController.Services.Parser
 {
@@ -20,20 +13,20 @@ namespace RemoteController.Services.Parser
     }
 
     // {"command":"mouse_move","data":{"cursorX": 50,"cursorY": 50}}
-    class MouseMoveCommand : CommandExecutor<MouseInfoResult, MouseMoveInput>
+    class MouseMoveCommand : CommandExecutor<MouseMoveInput>
     {
         protected MouseMoveInput input;
 
+        protected InputSimulator simulator;
+
+        public MouseMoveCommand(InputSimulator simulator) {
+            this.simulator = simulator;
+        }
+
         public MouseInfoResult Execute()
         {
-
-            Cursor _cur = new Cursor(Cursor.Current.Handle);
-            Cursor.Position = new Point(this.input.CursorX, this.input.CursorY);
-           // Cursor.Clip = new Rectangle(Cur, this.Size);
-
-            MouseInfoResult mouseInfo = new MouseInfoCommand().Execute();
-
-            return mouseInfo;
+            simulator.Mouse.MoveMouseTo(this.input.CursorX, this.input.CursorY);
+            return new MouseInfoCommand().Execute();
         }
 
         public void SetData(MouseMoveInput input)

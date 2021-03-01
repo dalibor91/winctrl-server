@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Fleck;
 
 namespace RemoteController.Services
@@ -23,6 +20,12 @@ namespace RemoteController.Services
             logger("Creating websocket service at " + serviceUrl);
 
             FleckLog.LogAction = (level, message, ex) => {
+                if (level == LogLevel.Debug)
+                {
+                    // no need to log debug messages
+                    return;
+                }
+
                 if (ex != null)
                 {
                     logger(String.Format("FleckLog: Level: {0} Message: {1} Error: {2}", level, message, ex.ToString()));

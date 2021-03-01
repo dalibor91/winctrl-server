@@ -19,7 +19,7 @@ namespace RemoteController.Services
 
         public void LogToDebugControl(string msg)
         {
-            ((TextBox)this.formService.GetControl("debugOutput")).AppendText(String.Format("{0}\r\n", msg));
+            ((TextBox)this.formService.GetControl("debugOutput")).AppendText(String.Format("[{0}] {1}\r\n", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), msg));
         }
     }
 }
