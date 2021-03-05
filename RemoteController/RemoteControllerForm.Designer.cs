@@ -109,6 +109,7 @@ namespace RemoteController
             this.label3.Size = new System.Drawing.Size(99, 13);
             this.label3.TabIndex = 6;
             this.label3.Text = "Key to authenticate";
+            this.label3.Visible = false;
             // 
             // authenticationKey
             // 
@@ -116,6 +117,7 @@ namespace RemoteController
             this.authenticationKey.Name = "authenticationKey";
             this.authenticationKey.Size = new System.Drawing.Size(295, 20);
             this.authenticationKey.TabIndex = 7;
+            this.authenticationKey.Visible = false;
             // 
             // RemoteControllerForm
             // 
@@ -133,8 +135,6 @@ namespace RemoteController
             this.MaximizeBox = false;
             this.Name = "RemoteControllerForm";
             this.Text = "Remote Control ";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RemoteControlFormClosing);
-            this.Load += new System.EventHandler(this.RemoteControlFormLoaded);
             this.ResumeLayout(false);
             this.PerformLayout();
 

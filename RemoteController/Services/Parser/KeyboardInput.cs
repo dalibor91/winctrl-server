@@ -47,10 +47,15 @@ namespace RemoteController.Services.Parser
                 case "{enter}":
                     simulator.Keyboard.KeyPress(VirtualKeyCode.RETURN);
                     break;
+                case "{backspace}":
+                case "{bksp}":
+                    simulator.Keyboard.KeyPress(VirtualKeyCode.BACK);
+                    break;
                 case "{escape}":
                     simulator.Keyboard.KeyPress(VirtualKeyCode.ESCAPE);
                     break;
                 case "{capslock}":
+                case "{lock}":
                     simulator.Keyboard.KeyPress(VirtualKeyCode.CAPITAL);
                     break;
                 case "{tab}":

@@ -12,11 +12,14 @@ namespace RemoteController
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new RemoteControllerForm());
+            RemoteControllerForm app = new RemoteControllerForm();
+            app.ServerArguments = args;
+            Application.Run(app);
         }
     }
 }

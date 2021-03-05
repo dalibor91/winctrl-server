@@ -10,6 +10,9 @@ namespace RemoteController.Services.Parser
 
         [JsonProperty("cursorY")]
         public int CursorY;
+
+        [JsonProperty("type")]
+        public string Type;
     }
 
     // {"command":"mouse_move","data":{"cursorX": 50,"cursorY": 50}}
@@ -25,7 +28,12 @@ namespace RemoteController.Services.Parser
 
         public MouseInfoResult Execute()
         {
-            simulator.Mouse.MoveMouseTo(this.input.CursorX, this.input.CursorY);
+            if (this.input.Type == "relative_mouse_move") {
+                simulator.Mouse.MoveMouseBy(this.input.CursorX, this.input.CursorY);
+            } else
+            {
+                simulator.Mouse.MoveMouseTo(this.input.CursorX, this.input.CursorY);
+            }
             return new MouseInfoCommand().Execute();
         }
 

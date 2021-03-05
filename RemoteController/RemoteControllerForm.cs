@@ -16,11 +16,14 @@ namespace RemoteController
         public readonly Services.FormService formService;
         public readonly Services.HelpService helpService;
 
+        public string[] ServerArguments;
+
         private delegate void MessageFromWorker(string message);
         private MessageFromWorker displayWorkerMessage;
 
         public RemoteControllerForm() {
             InitializeComponent();
+            Load += AfterFormLoaded;
             this.formService = new Services.FormService(this);
             this.helpService = formService.HelpService();
             this.displayWorkerMessage = new MessageFromWorker(this.HandleWorkerMessage);
@@ -30,14 +33,13 @@ namespace RemoteController
             this.helpService.LogToDebugControl(message);
         }
 
-        private void RemoteControlFormLoaded(object sender, EventArgs e)
-        {
+        private void AfterFormLoaded(object sender, EventArgs e) {
             this.helpService.LogToDebugControl("Form Loaded. Debug output should be saved on exit in some file...");
-        }
-
-        private void RemoteControlFormClosing(object sender, FormClosingEventArgs e)
-        {
-
+            if (ServerArguments.Length > 0)
+            {
+                formService.ServerLocation().Text = ServerArguments[0];
+                formService.StartRemoteServer().PerformClick();
+            }
         }
 
         private void StartRemoteClick(object sender, EventArgs e)
@@ -46,12 +48,10 @@ namespace RemoteController
             Button startServer = this.formService.StartRemoteServer();
             Button stopServer = this.formService.StopRemoteServer();
 
-            //this.helpService.LogToDebugControl(String.Format("Start Server at location: {0}", location.Text));
 
             startServer.Enabled = !startServer.Enabled;
             location.Enabled = !location.Enabled;
             stopServer.Enabled = !stopServer.Enabled;
-
             serviceWorker.RunWorkerAsync(location.Text);
         }
 
@@ -70,8 +70,6 @@ namespace RemoteController
 
             serviceWorker.CancelAsync();
         }
-
-        
 
         private void ServiceWorkerDoWork(object sender, DoWorkEventArgs e)
         {

@@ -19,7 +19,7 @@ namespace RemoteController.Services.Parser
         protected InputSimulator simulator;
 
         public MouseClickCommand(IInputSimulator simulator) {
-            simulator = new InputSimulator();
+            this.simulator = new InputSimulator();
         }
 
         public MouseInfoResult Execute()
