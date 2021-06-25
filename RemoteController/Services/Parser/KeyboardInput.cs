@@ -12,7 +12,7 @@ namespace RemoteController.Services.Parser
     }
 
     //{"command":"mouse_info","data":{"input": "foo,bar,baz"}}
-    class KeyboardInputCommand : CommandExecutor<KeyboardInputInput>
+    class KeyboardInputCommand : CommandExecutor<KeyboardInputInput, MouseInfoResult>
     {
         protected KeyboardInputInput input;
 
@@ -30,7 +30,7 @@ namespace RemoteController.Services.Parser
         {
 
             this.ParseText();
-            return new MouseInfoCommand().Execute(); ;
+            return new MouseInfoCommand().Execute();
         }
 
         public void SetData(KeyboardInputInput input)

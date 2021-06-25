@@ -12,7 +12,7 @@ namespace RemoteController.Services.Parser
     }
 
     // {"command":"mouse_move","data":{"tyle": "left"}}
-    class MouseClickCommand : CommandExecutor<MouseClickInput>
+    class MouseClickCommand : CommandExecutor<MouseClickInput, MouseInfoResult>
     {
         protected MouseClickInput input;
 

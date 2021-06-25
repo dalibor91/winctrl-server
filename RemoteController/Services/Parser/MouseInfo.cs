@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace RemoteController.Services.Parser
 {
-    class MouseInfoCommand : CommandExecutor<object>
+    class MouseInfoCommand : CommandExecutor<object, MouseInfoResult>
     {
         //{"command":"mouse_info","data":null}
         public MouseInfoResult Execute()

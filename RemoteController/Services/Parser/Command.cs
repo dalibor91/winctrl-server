@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 namespace RemoteController.Services.Parser
 {
 
-    interface CommandExecutor<InputForExecution>
+    interface CommandExecutor<InputForExecution, ExecuteResult>
     {
-        MouseInfoResult Execute();
+        ExecuteResult Execute();
 
         void SetData(InputForExecution data);
     }
@@ -16,12 +16,18 @@ namespace RemoteController.Services.Parser
      
         [JsonProperty("command")]
         public string Command { get; set; }
+
+        [JsonProperty("uuid")]
+        public string Uuid { get; set; }
+
         [JsonProperty("data")]
         public object Data { get; set; }
         public ExecutedCommand Execute()
         {
 
             ExecutedCommand cmd = new ExecutedCommand();
+            cmd.Uuid = this.Uuid;
+
             WindowsInput.InputSimulator simulator = new WindowsInput.InputSimulator();
 
             cmd.Success = true;
@@ -45,6 +51,11 @@ namespace RemoteController.Services.Parser
                     KeyboardInputCommand _keyboardCommand = new KeyboardInputCommand(simulator);
                     _keyboardCommand.SetData(ConvertObject<KeyboardInputInput>(Data));
                     cmd.Result = _keyboardCommand.Execute();
+                    break;
+                case "process_list":
+                    ProcessCommand _processCommand = new ProcessCommand();
+                    _processCommand.SetData(ConvertObject<ProcessInput>(Data));
+                    cmd.Result = _processCommand.Execute();
                     break;
                 default:
                     cmd.ErrorMessage = "Command not found";
@@ -72,6 +83,9 @@ namespace RemoteController.Services.Parser
 
         [JsonProperty("result")]
         public object Result { get; set; }
+
+        [JsonProperty("uuid")]
+        public object Uuid { get; set; }
 
         public static ExecutedCommand Error(string message)
         {

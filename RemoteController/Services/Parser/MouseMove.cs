@@ -16,7 +16,7 @@ namespace RemoteController.Services.Parser
     }
 
     // {"command":"mouse_move","data":{"cursorX": 50,"cursorY": 50}}
-    class MouseMoveCommand : CommandExecutor<MouseMoveInput>
+    class MouseMoveCommand : CommandExecutor<MouseMoveInput, MouseInfoResult>
     {
         protected MouseMoveInput input;
 
